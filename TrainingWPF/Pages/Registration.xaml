@@ -36,6 +36,23 @@
             <GroupBox Header="Введите пароль" >
                 
                 <StackPanel Orientation="Horizontal">
+                    <TextBox Name="tbPasswordTB" Height="20" Width="150" Visibility="Collapsed" >
+
+                        <TextBox.ToolTip>
+
+                            <TextBlock >
+                                Требования к паролю:
+                                  <LineBreak />   
+
+                                1.Не менее 1 заглавного латинского символа, не менее 3 строчных латинских символов
+                                 <LineBreak /> 
+                                2.Не менее 2 цифры и не менее 1 спец. символа. 
+                                 <LineBreak /> 
+                                3.Общая длина пароля не менее 8 символов
+
+                            </TextBlock>
+                        </TextBox.ToolTip>
+                    </TextBox>
                     <PasswordBox Name="tbPassword" Height="20" Width="150" >
 
                         <PasswordBox.ToolTip>
@@ -53,8 +70,7 @@
                             </TextBlock>
                         </PasswordBox.ToolTip>
                     </PasswordBox>
-                    <Image MouseDown="Image_MouseDown" Height="30" Width="30" Source="/Resources/viewPswrd.png"/>
-
+                    <CheckBox x:Name="checkPassword" Checked="checkPassword_Checked" Unchecked="checkPassword_Unchecked" VerticalAlignment="Center"/>
                 </StackPanel>
             </GroupBox>
            

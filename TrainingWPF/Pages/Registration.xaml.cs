@@ -198,10 +198,24 @@ namespace TrainingWPF
         {
             NavigationService.GoBack();
         }
-
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        private void checkPassword_Checked(object sender, RoutedEventArgs e)
         {
-           
+            if (checkPassword.IsChecked == true)
+            {
+                tbPasswordTB.Text = tbPassword.Password;
+                tbPasswordTB.Visibility = Visibility.Visible;
+                tbPassword.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void checkPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (checkPassword.IsChecked == false)
+            {
+                tbPassword.Password = tbPasswordTB.Text; 
+                tbPasswordTB.Visibility = Visibility.Collapsed; 
+                tbPassword.Visibility = Visibility.Visible;
+            }
         }
     }
 }
