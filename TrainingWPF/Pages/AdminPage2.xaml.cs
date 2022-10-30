@@ -55,41 +55,18 @@ namespace TrainingWPF.Pages
             SortCombobox.SelectedIndex = -1;
 
             cmbGender.SelectedIndex = -1;
-
+            cmbCity.SelectedIndex = -1;
             tbFiltres.Clear();
             dg.ItemsSource = DataBase.tbE.Users.ToList();
 
 
         }
-
-        private void SortedFiltres()
+        private void cmbDesc_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            List<Users> users = DataBase.tbE.Users.ToList();
-            if (cmbGender.SelectedItem != null)
-            {
-                ComboBoxItem comboBoxItem = (ComboBoxItem)cmbGender.SelectedItem;
-                switch (comboBoxItem.Content)
-                {
-                    case "Мужской":
-                        {
-                            users = users.Where(x => x.GenderTable.IdGender == 1).ToList();
-                            break;
-                        }
-                    case "Женский":
-                        {
-                            users = users.Where(x => x.GenderTable.IdGender == 2).ToList();
-                            break;
-                        }
-                }
-
-            }
-            if (cmbCity.SelectedItem != null)
-            {
-                if (cmbCity.SelectedItem.ToString() != "Все")
-                {
-                    users = users.Where(x => x.City.nameCity == cmbCity.SelectedItem.ToString()).ToList();
-                }
-            }
+            dg.ItemsSource = DataBase.tbE.Users.OrderByDescending(x => x.Surname).ToList();
+        }
+        private void SortCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
             if (SortCombobox.SelectedItem != null)
             {
                 ComboBoxItem comboBoxItem = (ComboBoxItem)SortCombobox.SelectedItem;
@@ -97,32 +74,39 @@ namespace TrainingWPF.Pages
                 {
                     case "По возрастанию":
                         {
-                            users = users.OrderBy(x => x.Surname).ToList();
+                            dg.ItemsSource = DataBase.tbE.Users.OrderBy(x => x.Surname).ToList();
                             break;
                         }
                     case "По убыванию":
                         {
-                            users = users.OrderByDescending(x => x.Surname).ToList();
+                            dg.ItemsSource = DataBase.tbE.Users.OrderByDescending(x => x.Surname).ToList();
                             break;
                         }
                 }
-               
-            }
-            dg.ItemsSource = users;
-        }
-        private void cmbDesc_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            dg.ItemsSource = DataBase.tbE.Users.OrderByDescending(x => x.Surname).ToList();
-        }
 
-        private void SortCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SortedFiltres();
+            }
         }
 
         private void cmbGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SortedFiltres();
+            if (cmbGender.SelectedItem != null)
+            {
+                ComboBoxItem comboBoxItem = (ComboBoxItem)cmbGender.SelectedItem;
+                switch (comboBoxItem.Content)
+                {
+                    case "Мужской":
+                        {
+                            dg.ItemsSource = DataBase.tbE.Users.Where(x => x.GenderTable.IdGender == 1).ToList();
+                            break;
+                        }
+                    case "Женский":
+                        {
+                            dg.ItemsSource = DataBase.tbE.Users.Where(x => x.GenderTable.IdGender == 2).ToList();
+                            break;
+                        }
+                }
+
+            }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -136,7 +120,13 @@ namespace TrainingWPF.Pages
 
         private void cmbCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SortedFiltres();
+            if (cmbCity.SelectedItem != null)
+            {
+                if (cmbCity.SelectedItem.ToString() != "Все")
+                {
+                    dg.ItemsSource = DataBase.tbE.Users.Where(x => x.City.nameCity == cmbCity.SelectedItem.ToString()).ToList();
+                }
+            }
         }
     }
 }
